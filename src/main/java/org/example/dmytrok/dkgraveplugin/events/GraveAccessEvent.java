@@ -93,6 +93,7 @@ public class GraveAccessEvent implements Listener {
             player.sendMessage("§cYou can't break this grave without the key or a Grave Breaker!");
         }
     }
+
     @EventHandler
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inventory = event.getInventory();
@@ -139,7 +140,6 @@ public class GraveAccessEvent implements Listener {
     }
 
 
-
     private boolean canAccessGrave(Chest chest, Player player) {
         if (chest == null) return false;
 
@@ -152,7 +152,7 @@ public class GraveAccessEvent implements Listener {
     }
 
     private boolean hasGraveKey(Player player, String chestName) {
-        for (ItemStack item : player.getInventory().getContents()) {
+        ItemStack item = player.getInventory().getItemInMainHand();
             if (item != null && item.getType() == Material.TRIPWIRE_HOOK) {
                 ItemMeta meta = item.getItemMeta();
                 if (meta != null && meta.hasDisplayName()) {
@@ -164,9 +164,9 @@ public class GraveAccessEvent implements Listener {
                     }
                 }
             }
-        }
         return false;
     }
+
     private boolean isGraveBreaker(ItemStack item) {
         if (item == null || item.getType() != Material.GOLD_AXE || !item.hasItemMeta()) {
             return false;
