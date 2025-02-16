@@ -1,0 +1,12 @@
+name: DK-Grave-Plugin
+version: '${project.version}'
+main: org.example.dmytrok.dkgraveplugin.DK_Grave_Plugin
+commands:
+  getGraveBreaker:
+    description: Creating grave breaker
+    usage: /getGraveBreaker
+    permission: getGraveBreaker.admin
+permissions:
+  getGraveBreaker.admin:
+    description: Only admin can get grave breaker
+    default: op
