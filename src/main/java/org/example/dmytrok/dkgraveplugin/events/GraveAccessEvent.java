@@ -126,7 +126,7 @@ public class GraveAccessEvent implements Listener {
     }
 
     private boolean isGraveChest(Chest chest) {
-        return chest != null && chest.getCustomName() != null && chest.getCustomName().startsWith("§8Grave of ");
+        return chest != null && chest.getCustomName() != null && chest.getCustomName().startsWith("Grave of ");
     }
 
     private boolean isChestEmpty(Chest chest) {
@@ -144,7 +144,7 @@ public class GraveAccessEvent implements Listener {
         if (chest == null) return false;
 
         String chestName = chest.getCustomName();
-        if (chestName == null || !chestName.startsWith("§8Grave of ")) return true;
+        if (chestName == null || !chestName.startsWith("Grave of ")) return true;
 
         if (hasGraveKey(player, chestName)) return true;
 

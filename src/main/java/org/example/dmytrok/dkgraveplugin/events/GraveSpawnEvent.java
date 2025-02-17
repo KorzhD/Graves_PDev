@@ -42,7 +42,7 @@ public class GraveSpawnEvent implements Listener {
             List<ItemStack> droppedChestKeys = new ArrayList<>();
             for (ItemStack item : itemStacks) {
                 if(item.getType().equals(Material.TRIPWIRE_HOOK) && item.getItemMeta().hasDisplayName()
-                        && item.getItemMeta().getDisplayName().startsWith("§6Grave Key ")) {
+                        && item.getItemMeta().getDisplayName().startsWith("Grave Key ")) {
                     droppedChestKeys.add(item);
                 }
             }
@@ -64,8 +64,8 @@ public class GraveSpawnEvent implements Listener {
             Chest chest = (Chest) chestLoc.getBlock().getState();
             Chest secondChest = (Chest) secondChestLoc.getBlock().getState();
 
-            chest.setCustomName("§8Grave of " + player.getName() + " | " + getChestSecretKey());
-            secondChest.setCustomName("§8Grave of " + player.getName() + " | " + key);
+            chest.setCustomName("Grave of " + player.getName() + " | " + getChestSecretKey());
+            secondChest.setCustomName("Grave of " + player.getName() + " | " + key);
             chest.update();
             secondChest.update();
 
