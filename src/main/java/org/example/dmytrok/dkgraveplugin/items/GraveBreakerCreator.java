@@ -13,7 +13,7 @@ public class GraveBreakerCreator {
         ItemMeta itemMeta = graveBreaker.getItemMeta();
 
         List<String> list = new ArrayList<>();
-        list.add("§4Nightmare of Graveyards...");
+        list.add("§4Nightmare of Graveyards....");
 
         if (itemMeta != null) {
             itemMeta.setDisplayName("Grave Breaker");
