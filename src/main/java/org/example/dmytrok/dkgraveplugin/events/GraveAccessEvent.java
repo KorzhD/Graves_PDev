@@ -173,7 +173,7 @@ public class GraveAccessEvent implements Listener {
         }
 
         ItemMeta meta = item.getItemMeta();
-        return meta.hasDisplayName() && meta.getDisplayName().equals("§0Grave Breaker");
+        return meta.hasDisplayName() && meta.getDisplayName().equals("Grave Breaker");
     }
 
 }
