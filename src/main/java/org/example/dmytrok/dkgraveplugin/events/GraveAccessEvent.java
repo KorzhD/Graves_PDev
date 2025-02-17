@@ -158,7 +158,7 @@ public class GraveAccessEvent implements Listener {
                 if (meta != null && meta.hasDisplayName()) {
                     int secretKeyCheck = chestName.indexOf("|");
                     String secretKey = chestName.substring(secretKeyCheck + 2, chestName.length());
-                    if (meta.getDisplayName().replace("§6Grave Key ", "")
+                    if (meta.getDisplayName().replace("Grave Key ", "")
                             .equals(secretKey)) {
                         return true;
                     }

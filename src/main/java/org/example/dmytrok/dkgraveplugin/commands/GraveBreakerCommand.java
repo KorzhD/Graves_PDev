@@ -18,7 +18,7 @@ public class GraveBreakerCommand implements CommandExecutor {
 
         Player player = (Player) commandSender;
 
-        if(!(player.hasPermission("getGraveBraker.admin"))) {
+        if(!(player.hasPermission("getGraveBreaker.admin"))) {
             commandSender.sendMessage("You must be an admin");
             return false;
         }

@@ -33,7 +33,7 @@ public class GraveKeyAfterRebornEvent implements Listener {
         }
 
         if (graveKeyMeta != null && secretKey != null) {
-            graveKeyMeta.setDisplayName("§6Grave Key " + secretKey);
+            graveKeyMeta.setDisplayName("Grave Key " + secretKey);
             graveKey.setItemMeta(graveKeyMeta);
             player.getInventory().addItem(graveKey);
         }
