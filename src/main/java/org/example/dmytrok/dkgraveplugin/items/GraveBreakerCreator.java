@@ -16,7 +16,7 @@ public class GraveBreakerCreator {
         list.add("§4Nightmare of Graveyards...");
 
         if (itemMeta != null) {
-            itemMeta.setDisplayName("§0Grave Breaker");
+            itemMeta.setDisplayName("Grave Breaker");
             itemMeta.setLore(list);
             itemMeta.setUnbreakable(true);
             graveBreaker.setItemMeta(itemMeta);
