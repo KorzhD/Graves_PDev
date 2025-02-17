@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -64,8 +65,11 @@ public class GraveSpawnEvent implements Listener {
             Chest chest = (Chest) chestLoc.getBlock().getState();
             Chest secondChest = (Chest) secondChestLoc.getBlock().getState();
 
-            chest.setCustomName("Grave of " + player.getName() + " | " + getChestSecretKey());
-            secondChest.setCustomName("Grave of " + player.getName() + " | " + key);
+            String firstChestName = "Grave of " + player.getName() + " | " + getChestSecretKey();
+            String secondChestName = "Grave of " + player.getName() + " | " + key;
+
+            chest.setCustomName(firstChestName);
+            secondChest.setCustomName(secondChestName);
             chest.update();
             secondChest.update();
 
@@ -83,8 +87,16 @@ public class GraveSpawnEvent implements Listener {
     }
 
     public String getChestSecretKey() {
-        UUID id = UUID.randomUUID();
-        String chestSecretKey = id.toString();
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(11);
+
+        for (int i = 0; i < 11; i++) {
+            int index = random.nextInt(characters.length());
+            sb.append(characters.charAt(index));
+        }
+
+        String chestSecretKey = sb.toString();
         key = chestSecretKey;
         GraveKeyAfterRebornEvent.secretKey = chestSecretKey;
         return chestSecretKey;
