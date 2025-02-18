@@ -1,7 +1,12 @@
 package org.example.dmytrok.dkgraveplugin.events;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Hopper;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.minecart.HopperMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.Material;
@@ -9,12 +14,19 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryInteractEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.example.dmytrok.dkgraveplugin.DK_Grave_Plugin;
 
 
 public class GraveAccessEvent implements Listener {
@@ -78,6 +90,9 @@ public class GraveAccessEvent implements Listener {
         Chest chest = (Chest) block.getState();
         ItemStack itemInHand = player.getInventory().getItemInMainHand();
 
+        if (!isGraveChest(chest)) {
+            return;
+        }
 
         if (isGraveBreaker(itemInHand)) {
             event.setCancelled(true);
@@ -94,6 +109,84 @@ public class GraveAccessEvent implements Listener {
         }
     }
 
+    @EventHandler
+    public void onChestExploded(BlockExplodeEvent event) {
+        for (Block block : event.blockList()) {
+            if (block.getType() == Material.CHEST) {
+                Chest chest = (Chest) block.getState();
+
+                if (isGraveChest(chest)) {
+                    event.setCancelled(true);
+                    Bukkit.broadcastMessage("§cA grave chest cannot be destroyed by explosions!");
+                }
+            }
+        }
+    }
+    @EventHandler
+    public void onExplosionPrime(ExplosionPrimeEvent event) {
+            Entity entity = event.getEntity();
+            Location tntLocation = entity.getLocation();
+
+
+            double radius = event.getRadius();
+
+            for (double x = -radius; x <= radius; x++) {
+                for (double y = -radius; y <= radius; y++) {
+                    for (double z = -radius; z <= radius; z++) {
+                        Location checkLocation = tntLocation.clone().add(x, y, z);
+                        Block block = checkLocation.getBlock();
+
+                        if (block.getType() == Material.CHEST) {
+                            Chest chest = (Chest) block.getState();
+                            if (isGraveChest(chest)) {
+                                event.setCancelled(true);
+                                Bukkit.broadcastMessage("§cA grave chest cannot be destroyed by explosions!");
+                                return;
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
+    @EventHandler
+    public void onHopperTakesItems(InventoryMoveItemEvent event) {
+        if(!(event.getSource().getHolder() instanceof DoubleChest) && !(event.getDestination().getHolder() instanceof Hopper)) {
+            return;
+        }
+        DoubleChest doubleChest = (DoubleChest) event.getSource().getHolder();
+        Chest chest1 = (Chest) doubleChest.getLeftSide();
+        Chest chest2 = (Chest) doubleChest.getRightSide();
+
+        if (!isGraveChest(chest1) && !isGraveChest(chest2)) {
+            return;
+        } else {
+            event.setCancelled(true);
+
+            if(event.getDestination().getHolder() instanceof Hopper){
+                Hopper hopper = (Hopper) event.getDestination().getHolder();
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (hopper != null) {
+                            Block block = hopper.getBlock();
+                            if (block != null) {
+                                block.setType(Material.AIR);
+                            }
+                        }
+                    }
+                }.runTaskLater(DK_Grave_Plugin.getInstance(), 1L);
+
+            } else if (event.getDestination().getHolder() instanceof HopperMinecart) {
+                HopperMinecart hopper = (HopperMinecart) event.getDestination().getHolder();
+                if(hopper != null) {
+                    hopper.remove();
+                }
+            }
+            Bukkit.broadcastMessage("§cA hopper can't take items from grave!");
+        }
+
+    }
     @EventHandler
     public void onChestClose(InventoryCloseEvent event) {
         Inventory inventory = event.getInventory();

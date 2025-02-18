@@ -1,4 +1,5 @@
 org\example\dmytrok\dkgraveplugin\events\GraveKeyAfterRebornEvent.class
+org\example\dmytrok\dkgraveplugin\events\GraveAccessEvent$1.class
 org\example\dmytrok\dkgraveplugin\events\GraveSpawnEvent.class
 org\example\dmytrok\dkgraveplugin\commands\GraveBreakerCommand.class
 org\example\dmytrok\dkgraveplugin\DK_Grave_Plugin.class

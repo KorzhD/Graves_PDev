@@ -40,6 +40,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
         <resources>
             <resource>
@@ -58,6 +59,13 @@
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
+            <repository>
+                <id>spigot-repo</id>
+                <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+                <snapshots>
+                    <enabled>true</enabled>
+                </snapshots>
+            </repository>
     </repositories>
 
     <dependencies>
@@ -67,5 +75,6 @@
             <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 </project>

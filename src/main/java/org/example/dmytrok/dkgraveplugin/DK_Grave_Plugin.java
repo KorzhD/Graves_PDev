@@ -8,8 +8,11 @@ import org.example.dmytrok.dkgraveplugin.commands.GraveBreakerCommand;
 
 public final class DK_Grave_Plugin extends JavaPlugin {
 
+    private static DK_Grave_Plugin instance;
+
     @Override
     public void onEnable() {
+        instance = this;
         getLogger().info("DK_Grave_Plugin enabled");
         getServer().getPluginManager().registerEvents(new GraveSpawnEvent(), this);
         getServer().getPluginManager().registerEvents(new GraveAccessEvent(), this);
@@ -27,4 +30,9 @@ public final class DK_Grave_Plugin extends JavaPlugin {
     public void onDisable() {
         getLogger().info("DK_Grave_Plugin disabled");
     }
+
+    public static DK_Grave_Plugin getInstance() {
+        return instance;
+    }
 }
+

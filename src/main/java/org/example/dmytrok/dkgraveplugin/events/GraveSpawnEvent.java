@@ -7,8 +7,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -62,6 +66,7 @@ public class GraveSpawnEvent implements Listener {
             chestLoc.getBlock().setType(Material.CHEST);
             secondChestLoc.getBlock().setType(Material.CHEST);
 
+
             Chest chest = (Chest) chestLoc.getBlock().getState();
             Chest secondChest = (Chest) secondChestLoc.getBlock().getState();
 
@@ -70,6 +75,8 @@ public class GraveSpawnEvent implements Listener {
 
             chest.setCustomName(firstChestName);
             secondChest.setCustomName(secondChestName);
+
+
             chest.update();
             secondChest.update();
 
