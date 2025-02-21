@@ -43,6 +43,12 @@ public class GraveAccessEvent implements Listener {
         }
         Chest chest = (Chest) event.getInventory().getHolder();
 
+        ItemStack superKey = player.getInventory().getItemInMainHand();
+
+        if (isSuperKey(superKey)) {
+            return;
+        }
+
         if (!canAccessGrave(chest, player)) {
             event.setCancelled(true);
             player.sendMessage("§cYou don't have the key to open this grave!");
@@ -70,6 +76,11 @@ public class GraveAccessEvent implements Listener {
 
         Chest chest = (Chest) block.getState();
         Player player = event.getPlayer();
+
+        ItemStack superKey = player.getInventory().getItemInMainHand();
+        if (isSuperKey(superKey)) {
+            return;
+        }
 
         if (!canAccessGrave(chest, player)) {
             event.setCancelled(true);
@@ -117,7 +128,6 @@ public class GraveAccessEvent implements Listener {
 
                 if (isGraveChest(chest)) {
                     event.setCancelled(true);
-                    Bukkit.broadcastMessage("§cA grave chest cannot be destroyed by explosions!");
                 }
             }
         }
@@ -140,7 +150,6 @@ public class GraveAccessEvent implements Listener {
                             Chest chest = (Chest) block.getState();
                             if (isGraveChest(chest)) {
                                 event.setCancelled(true);
-                                Bukkit.broadcastMessage("§cA grave chest cannot be destroyed by explosions!");
                                 return;
                             }
                         }
@@ -183,7 +192,6 @@ public class GraveAccessEvent implements Listener {
                     hopper.remove();
                 }
             }
-            Bukkit.broadcastMessage("§cA hopper can't take items from grave!");
         }
 
     }
@@ -267,6 +275,15 @@ public class GraveAccessEvent implements Listener {
 
         ItemMeta meta = item.getItemMeta();
         return meta.hasDisplayName() && meta.getDisplayName().equals("Grave Breaker");
+    }
+
+    private boolean isSuperKey(ItemStack item) {
+        if (item == null || item.getType() != Material.TOTEM || !item.hasItemMeta()) {
+            return false;
+        }
+
+        ItemMeta meta = item.getItemMeta();
+        return meta.hasDisplayName() && meta.getDisplayName().equals("Super Key");
     }
 
 }

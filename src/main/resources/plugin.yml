@@ -6,7 +6,14 @@ commands:
     description: Creating grave breaker
     usage: /getGraveBreaker
     permission: getGraveBreaker.admin
+  getSuperKey:
+    description: Creating super key
+    usage: /getSuperKey
+    permission: getSuperKey.admin
 permissions:
   getGraveBreaker.admin:
     description: Only admin can get grave breaker
+    default: op
+  getSuperKey.admin:
+    description: Only admin can get super key
     default: op
